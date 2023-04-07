@@ -1,0 +1,11 @@
+exports.{{name}} = (req, res) => {
+
+    try {
+        {{defineInit}}
+        const {{entity}} = {{schemaName}}.find();
+
+        res.send({ code: 1, message: 'Success', data: {{entity}}})
+    } catch(err) {
+        throw new Error(err)
+    }
+}

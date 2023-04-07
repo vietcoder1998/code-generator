@@ -1,0 +1,13 @@
+﻿entity,schemaName,tableName,name,type,maxLength,refs,required,sourceIndex
+company,CompanySchema,companies,name,string,40,,TRUE,../../../../example/src
+,,,description,string,5000,,TRUE,
+,,,job,objectid,,jobs,TRUE,
+,,,taxNumber,string,40,,,
+,,,phone,string,40,,TRUE,
+,,,email,string,40,,TRUE,
+,,,,,,,,
+,,,,,,,,
+apply,ApplyCompany,applies,message,string,1000,,TRUE,
+,,,phone,string,40,,TRUE,
+,,,email,string ,40,,,
+,,,job,objectId,40,jobs,TRUE,

@@ -1,0 +1,6 @@
+const multer = require('multer');
+const upload = multer();
+
+exports.handleFile = function (req, res, next) {
+    return upload.none(req, res, next);
+}

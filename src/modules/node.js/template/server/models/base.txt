@@ -1,0 +1,14 @@
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
+
+const schema = mongoose.Schema({{{paramester}}},{ timestamps: true });
+
+schema.method("toJSON", function () {
+    const { __v, _id, ...object } = this.toObject();
+    object.id = _id;
+    return object;
+});
+
+const {{tableName}} = mongoose.model("{{tableName}}", schema);
+
+module.exports = {{tableName}}

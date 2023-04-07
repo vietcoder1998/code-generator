@@ -1,0 +1,15 @@
+exports.{{name}} = (req, res) => {
+    try {
+        {{defineInit}}
+        const {{entity}} = {{schemaName}}.find({ id: {{entity}}Id})        
+
+        if (!{{entity}}) {
+            res.status(400).send('{{entity}} is not found in the schema');
+        }
+
+        {{entity}} = { ...{{entity}}, {{updateBody}}}
+        {{entity}}.update({{entity}}).then((data) => res.send({code: 1, data, message: 'Update {{entity}} success!'}))
+    } catch(err) {
+        throw new Error(err)
+    }
+}

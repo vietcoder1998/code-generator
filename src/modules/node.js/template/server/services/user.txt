@@ -1,0 +1,26 @@
+const bcrypt = require('bcrypt')
+const UserSchema = require('../models/user.model')
+const RoleSchema = require('../models/role.model')
+
+exports.create = async (payload) => {
+  const { name, username, password } = payload
+  const count = await UserSchema.count({ username })
+  const salt = bcrypt.genSaltSync(10, 'a')
+  const hashPass = await bcrypt.hashSync(password, salt)
+
+  if (count) {
+    throw new Error('User is existed`')
+  }
+
+  const user = new UserSchema({
+    name,
+    username,
+    description: 'New User Create',
+    password: hashPass,
+  })
+  const role = await RoleSchema.findOne({ name: 'User' })
+  user.role = role._id
+  const data = await user.save()
+
+  return data
+}

@@ -1,0 +1,35 @@
+const path = require('path')
+const fs = require('fs')
+const os = require('os')
+const moment = require('moment')
+const logdir = path.resolve(__dirname, '../../log')
+const logeror = path.resolve(__dirname, '../../error.log')
+exports.logRequest = async (req, res, next) => {
+  try {
+    const date = new Date()
+    const method = req.method
+    const body = JSON.stringify(req.body)
+    const ip = req.headers['x-forwarded-for'] || req.connection.remote
+    const today = moment(new Date()).format('YYYY-MM-DD')
+    const fileLink = path.join(logdir, today)
+    const newLine = [date, method, body, ip, req.originalUrl, os.EOL].join(' ')
+
+    fs.open(fileLink, 'a', 666, (e, id) => {
+      fs.write(id, newLine, (error) => {
+        if (error) {
+          console.log(error)
+        }
+
+        fs.close(id, function (err) {
+          if (err) {
+            console.log(err)
+          }
+        })
+      })
+    }, 1)
+  } catch (error) {
+    console.error(error)
+  }
+
+  next()
+}

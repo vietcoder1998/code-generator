@@ -1,0 +1,51 @@
+const Crypto = require('crypto-js')
+const UserSchema = require('../models/user.model')
+const UserService = require('../services/user.service')
+const bcrypt = require('bcrypt')
+const client = require('../config/redis.config')
+
+exports.verifyToken = async (username, token) => {
+  if (!username || !token) {
+    throw new Error('username and password is required')
+  }
+
+  const tokenInDB = await client.hGet(process.env.AUTH_REDIS_DB, username)
+  return { verify: tokenInDB === token, token }
+}
+
+exports.signIn = async (username, password) => {
+  const user = await UserSchema.findOne({ username })
+
+  if (!user) {
+    throw new Error('User not found')
+  }
+
+  const isSuccessPassword = await bcrypt.compareSync(password, user.password)
+
+  if (!isSuccessPassword) {
+    throw new Error('Password is not correct')
+  }
+
+  const message = [username, password].join('.')
+  const token = Crypto.AES.encrypt(
+    message,
+    process.env.NODE_PRIVATE_KEY,
+  ).toString()
+
+  client.hSet(process.env.AUTH_REDIS_DB, username, token)
+
+  return {
+    username,
+    token,
+  }
+}
+
+exports.signUp = async (username, password, name) => {
+  const newUser = await UserService.create({ username, password, name })
+
+  if (!newUser) {
+    throw new Error('Error in register')
+  }
+
+  return newUser
+}

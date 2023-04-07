@@ -1,0 +1,29 @@
+{
+  "name": "generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/index.js",
+    "generate:node": "node src/modules/node.js/script/generator.js",
+    "generate:ruby": "node src/modules/node.js/script/generator.js",
+    "destroy:node": "node src/modules/node.js/script/destroyer.js",
+    "gnode": "npm run generate:node",
+    "dnode": "npm run destroy:node",
+    "gruby": "npm run generate:node"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bug": "^1.2.0",
+    "cors": "^2.8.5",
+    "csv-parse": "^5.3.6",
+    "express": "^4.18.2",
+    "nodemon": "^2.0.22",
+    "pug": "^3.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "socket.io": "^4.6.1"
+  }
+}

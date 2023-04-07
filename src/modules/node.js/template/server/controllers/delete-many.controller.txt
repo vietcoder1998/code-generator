@@ -1,0 +1,14 @@
+exports.{{name}} = (req, res) => {
+    try {
+        {{defineInit}}
+        const {{entity}} = {{schemaName}}.find({ id: {{entity}}Ids });
+
+        if (!{{entity}}) {
+            res.status(400).send('{{entity}} is not found in the schema');
+        } else {
+            {{entity}}.delete({ id: { $in: {{entity}}Ids } }).then(data => res.send({code: 1, data: data, message: 'Delete successfully'}));
+        } 
+    } catch(err) {
+        throw new Error(err)
+    }
+}

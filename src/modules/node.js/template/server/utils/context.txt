@@ -1,0 +1,23 @@
+exports.MatrixHandler = function (data) {
+  this.raw = data.toString().split('\n')
+  this.value = this.raw.map((element) => {
+    const world = element.split(',')
+    return world
+  })
+  this.maxColumn = this.value.sort((item) => item.length)
+  this.row = this.raw.length
+
+  this.getRow = (pos) => {
+    return this.value[pos]
+  }
+
+  this.getColumn = (pos) => {
+    let data = []
+    this.raw.forEach((item) => {
+      const element = item.find((element, i) => i === pos)
+      data.pust(element)
+    })
+  }
+
+  return this
+}

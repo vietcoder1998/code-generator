@@ -1,0 +1,10 @@
+exports.{{name}} = (req, res) => {
+    try {
+        {{defineInit}}
+        const {{entity}} = new {{schemaName}}()
+
+        {{schemaName}}.save({{entity}}).then((data) => res.send(data))
+    } catch(err) {
+        throw new Error(err)
+    }
+}

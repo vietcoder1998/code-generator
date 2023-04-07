@@ -1,0 +1,11 @@
+const client = require('./config/redis.config')
+
+
+client
+  .connect()
+  .then(() => {
+    console.log('redis server connected')
+  })
+  .catch((err) => {
+    console.log('Redis connected error')
+    })
